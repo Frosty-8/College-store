@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <details>
+        <details>
+            <summary>C++ Solution</summary>
+            <pre>
+            <code>
+                #include &lt;iostream&gt;
+                #include &lt;string&gt;
+                using namespace std;
+
+                string makeSmallestPalindrome(string s) {
+                    int n = s.length();
+                    for (int i = 0; i < n / 2; ++i) {
+                        if (s[i] != s[n - i - 1]) {
+                            s[i] = s[n - i - 1] = min(s[i], s[n - i - 1]);
+                        }
+                    }
+                    return s;
+                }
+
+                int main() {
+                    string s;
+                    cin >> s;
+                    cout << makeSmallestPalindrome(s) << endl;
+                    return 0;
+                }
+            </code>
+            </pre>
+        </details>
+    </details>
+</body>
+</html>
