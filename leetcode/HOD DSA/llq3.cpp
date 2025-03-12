@@ -91,7 +91,7 @@ void linklist::reverse(){
     Node *prev,*curr,*next;
     prev=NULL;
     curr=head;
-    if(curr!=NULL){
+    while(curr!=NULL){
         next=curr->link;
         curr->link=prev;
         prev=curr;
@@ -103,6 +103,7 @@ void linklist::reverse(){
 void linklist::single(){
     if(head==NULL){
         cout<<"List is empty\n"<<endl;
+        return;
     }
     vector<int> data;
     Node *temp=head;
@@ -155,9 +156,15 @@ int main() {
     lst.create();
     lst.display();
 
-    cout<<"\nEnter the key : ";
-    cin>>key;
-    lst.search(key);
+    // cout<<"\nEnter the key : ";
+    // cin>>key;
+    // lst.search(key);
+
+    // lst.single();
+    // lst.display();
+
+    lst.reverse();
+    lst.display();
 
 
     // int i=5,j=3;
