@@ -1,6 +1,5 @@
 #include<bits/stdc++.h>
 using namespace std;
-
 struct Node{
     int data;
     Node *link;
@@ -30,6 +29,7 @@ public:
 
     void create();
     void display();
+    void reverse();
 };
 
 void linklist::create(){
@@ -78,10 +78,29 @@ void linklist::display(){
 
     cout << head->data << endl; 
 }
+void linklist::reverse(){
+    if(head==NULL) return;
+
+    Node *prev=NULL;
+    Node *curr=head;
+    Node *next=NULL;
+    Node *tail=head;
+    do{
+        next=curr->link;
+        curr->link=prev;
+        prev=curr;
+        curr=next;
+    }while(curr!=head);
+    head->link=prev;
+    head=prev;
+}
 
 int main(){
     linklist lst;
 
     lst.create();
+    lst.display();
+
+    lst.reverse();
     lst.display();
 }
