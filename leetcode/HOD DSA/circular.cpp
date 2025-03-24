@@ -78,6 +78,8 @@ void linklist::display(){
 
     cout << head->data << endl; 
 }
+
+
 void linklist::reverse(){
     if(head==NULL) return;
 
