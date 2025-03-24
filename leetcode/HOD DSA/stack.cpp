@@ -2,7 +2,7 @@
 using namespace std;
 
 struct Node {
-    int data;
+    char data;
     Node *link;
 };
 
@@ -22,15 +22,15 @@ public:
         }
     }
 
-    void push(int x);
-    int pop();
+    void push(char x);
+    char pop();
     void display();
-    int isempty() {
+    char isempty() {
         return head == NULL;
     }
 };
 
-void Stack::push(int x) {
+void Stack::push(char x) {
     Node *nn = new Node;
     if (nn == NULL) {
         cout << "Stack full";
@@ -41,14 +41,14 @@ void Stack::push(int x) {
     head = nn;
 }
 
-int Stack::pop() {  // Return the popped value
+char Stack::pop() {  // Return the popped value
     if (isempty()) {
         cout << " No data ";
         exit(0);
     }
 
     Node *t = head;
-    int poppedValue = t->data;  // Store data before deletion
+    char poppedValue = t->data;  // Store data before deletion
     head = head->link;
     delete t;
 
@@ -70,16 +70,20 @@ void Stack::display() {
 }
 
 int main() {
-    Stack s;
+    Stack S;
+    
+    string s = " automobile ";
+    string t;
 
-    s.push(10);
-    s.push(12);
-    s.push(11);
-    s.push(22);
-    s.display();
+    for(int i=0;i<s.size();i++){
+        S.push(s[i]);
+    }
+    // for(int i=0;i<s.size();i++){
+    //     t+=S.pop();
+    // }
 
-    cout << "Popped: " << s.pop() << endl;
-    s.display();
+
+    S.display();
 
     return 0;
 }
