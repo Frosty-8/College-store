@@ -3,7 +3,7 @@ using namespace std;
 
 struct Node{
     int data;
-    Node *link;
+    Node *link,*prev;
 };
 
 class doublylist{
@@ -43,12 +43,14 @@ void doublylist::create(){
             cin>>nn->data;
             cout<<nn->data<<" stored in node "<<i<<endl;
             nn->link=NULL;
+            nn->prev=NULL;
 
             if(i==0){
                 head=nn;
                 temp=nn;
             }else{
                 temp->link = nn;
+                nn->prev=temp;
                 temp = nn;
             }
         }
