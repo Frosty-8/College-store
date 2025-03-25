@@ -30,6 +30,8 @@ public:
     void create();
     void display();
     void reverse();
+    void addatrear();
+    void deleterear();
 };
 
 void linklist::create(){
@@ -49,14 +51,14 @@ void linklist::create(){
         cin>>nn->data;
         cout<<nn->data<< " stored in node "<<i<<endl;
         
-        nn->link = nullptr; // Initialize link to nullptr
+        nn->link = nullptr;
 
         if(i==0){
-            head = nn; // First node becomes head
-            temp = nn; // Temp points to the head
+            head = nn;
+            temp = nn;
         }else{
-            temp->link = nn; // Link previous node to current
-            temp = nn; // Move temp to current node
+            temp->link = nn;
+            temp = nn;
         }
     }
     temp->link = head;
@@ -79,7 +81,6 @@ void linklist::display(){
     cout << head->data << endl; 
 }
 
-
 void linklist::reverse(){
     if(head==NULL) return;
 
@@ -97,12 +98,82 @@ void linklist::reverse(){
     head=prev;
 }
 
+void linklist::addatrear(){
+    // If list is empty, create a new node as the head
+    if(head == NULL){
+        Node *nn = new Node;
+        cout << "Enter the node to be inserted at rear : ";
+        cin >> nn->data;
+        head = nn;
+        nn->link = head;
+        return;
+    }
+
+    // Create new node
+    Node *nn = new Node;
+    cout << "Enter the node to be inserted at rear : ";
+    cin >> nn->data;
+
+    // Find the last node
+    Node *t = head;
+    while(t->link != head){
+        t = t->link;
+    }
+
+    // Insert the new node
+    nn->link = head;  // New node points to head
+    t->link = nn;     // Last node points to new node
+}
+
+void linklist::deleterear(){
+    // If list is empty
+    if(head == NULL){
+        cout << "List is empty" << endl;
+        return;
+    }
+    
+    // If only one node
+    if(head->link == head){
+        delete head;
+        head = NULL;
+        return;
+    }
+
+    // Find the last and second-to-last nodes
+    Node *t = head;
+    Node *prev = NULL;
+
+    // Traverse until we reach the last node
+    while(t->link != head){
+        prev = t;
+        t = t->link;
+    }
+
+    // Disconnect the last node
+    prev->link = head;
+    
+    // Delete the last node
+    delete t;
+}
+
 int main(){
     linklist lst;
 
     lst.create();
+    cout << "Original List: ";
     lst.display();
 
     lst.reverse();
+    cout << "Reversed List: ";
     lst.display();
+
+    lst.addatrear();
+    cout << "List after adding at rear: ";
+    lst.display();
+
+    lst.deleterear();
+    cout << "List after deleting rear: ";
+    lst.display();
+
+    return 0;
 }

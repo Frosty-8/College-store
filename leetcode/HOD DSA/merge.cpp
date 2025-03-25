@@ -36,7 +36,7 @@ public:
 
     void create();
     void display();
-    void reverse();
+    void displayLinear();
     void merge(linklist &x, linklist &y);
 };
 
@@ -60,17 +60,17 @@ void linklist::create()
         cin >> nn->data;
         cout << nn->data << " stored in node " << i << endl;
 
-        nn->link = nullptr; // Initialize link to nullptr
+        nn->link = nullptr;
 
         if (i == 0)
         {
-            head = nn; // First node becomes head
-            temp = nn; // Temp points to the head
+            head = nn;
+            temp = nn;
         }
         else
         {
-            temp->link = nn; // Link previous node to current
-            temp = nn;       // Move temp to current node
+            temp->link = nn;
+            temp = nn;
         }
     }
     temp->link = head;
@@ -96,14 +96,37 @@ void linklist::display()
     cout << " X " << endl;
 }
 
+void linklist::displayLinear()
+{
+    if (head == NULL)
+    {
+        cout << "List is empty." << endl;
+        return;
+    }
+
+    Node *t = head;
+    Node *first = head;
+    int count = 0;
+    int maxCount = 1000;
+
+    do
+    {
+        cout << t->data << " -> ";
+        t = t->link;
+        count++;
+    } while (t != first && count < maxCount);
+
+    cout << "NULL" << endl;
+}
+
 void linklist::merge(linklist &x, linklist &y)
 {
     Node *x1 = x.head;
     Node *y1 = y.head;
-    Node *temp, *nn;
+    Node *temp = NULL;
 
     if(x1 == NULL){
-         head=y1;
+        head = y1;
         return;
     }
 
@@ -111,41 +134,59 @@ void linklist::merge(linklist &x, linklist &y)
         head = x1;
         return;
     }
-    do{
-        nn = new Node;
-        if(x1->data < y1->data){
+
+    // Reset to start of lists
+    Node *x_start = x1;
+    Node *y_start = y1;
+
+    do {
+        Node *nn = new Node;
+        
+        if(x1->data <= y1->data){
             nn->data = x1->data;
-            x1=x1->link;
-        }else{
-            nn->data = y1->data;
-            y1=y1->link;
+            x1 = x1->link;
         }
-        if(head==NULL){
-            head=nn;
-            temp=nn;
-        }else{
-            temp->link=nn;
-            temp=nn;
+        else{
+            nn->data = y1->data;
+            y1 = y1->link;
         }
 
-    }while(x1!=x.head & y1!=y.head);
-    
-    while(x1!=x.head){
-        nn = new Node;
-        nn->data=x1->data;
-        temp->link=nn;
-        temp=nn;
-        x1=x1->link;
+        // Create first node of merged list
+        if(head == NULL){
+            head = nn;
+            temp = nn;
+        }
+        else{
+            temp->link = nn;
+            temp = nn;
+        }
+
+        // Stop if we've gone through entire lists
+        if(x1 == x_start || y1 == y_start)
+            break;
+    } while(true);
+
+    // Add remaining elements from x list if any
+    while(x1 != x_start){
+        Node *nn = new Node;
+        nn->data = x1->data;
+        temp->link = nn;
+        temp = nn;
+        x1 = x1->link;
     }
-    
-    while(y1!=y.head){
-        nn = new Node;
-        nn->data=y1->data;
-        temp->link=nn;
-        temp=nn;
-        y1=y1->link;
+
+    // Add remaining elements from y list if any
+    while(y1 != y_start){
+        Node *nn = new Node;
+        nn->data = y1->data;
+        temp->link = nn;
+        temp = nn;
+        y1 = y1->link;
     }
-    temp->link = head;  
+
+    // Make list circular
+    if(temp != NULL)
+        temp->link = head;
 }
 
 int main()
@@ -158,6 +199,6 @@ int main()
     lst2.display();
 
     lst3.merge(lst1, lst2);
-    lst3.display();
+    lst3.displayLinear();
     return 0;
 }
